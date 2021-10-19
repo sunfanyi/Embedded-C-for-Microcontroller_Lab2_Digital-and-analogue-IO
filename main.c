@@ -24,13 +24,13 @@ void main(void)
                 // if it's held down for 500 ms
                 while (time > 500 && !PORTFbits.RF2) {
                     count++;
-                	LEDarray_disp_bin(count);
+                	LEDarray_disp_dec(count);
                 	__delay_ms(50);
                 }
             }
         }
         
-		LEDarray_disp_bin(count); //output a on the LED array in binary
+		LEDarray_disp_dec(count); //output a on the LED array in binary
 		__delay_ms(50);
     }
 }
