@@ -30,6 +30,18 @@ void LEDarray_init(void)
 }
 
 /************************************
+/ LEDarray_init
+/ Function used to initialise input from the button
+************************************/
+void btnInput_init(void)
+{
+    //set up TRIS registers for input from the button
+    TRISFbits.TRISF2 = 1;
+    //turn off analogue input
+    ANSELFbits.ANSELF2=0;
+}
+
+/************************************
 / LEDarray_disp_bin
 / Function used to display a number on the LED array in binary
 ************************************/
