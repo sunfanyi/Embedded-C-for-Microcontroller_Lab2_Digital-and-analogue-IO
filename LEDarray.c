@@ -93,4 +93,3 @@ void LEDarray_disp_PPM(unsigned int cur_val, unsigned int max)
 
 	LEDarray_disp_bin(disp_val);	//display value on LED array
 }
-

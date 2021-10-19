@@ -17,6 +17,7 @@ void main(void)
         int time = 0;
         if (PORTFbits.RF2 == 0) {
             count++;
+            if (count == 90) {count = 0;}  // reset after all LEDs are on
             // when the button is held down
             while (!PORTFbits.RF2) {
                 time++;
@@ -24,6 +25,7 @@ void main(void)
                 // if it's held down for 500 ms
                 while (time > 500 && !PORTFbits.RF2) {
                     count++;
+                    if (count == 90) {count = 0;}
                 	LEDarray_disp_dec(count);
                 	__delay_ms(50);
                 }
