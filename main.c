@@ -14,11 +14,20 @@ void main(void)
     btnInput_init();
   
     while (1) {
-        
+        int time = 0;
         if (PORTFbits.RF2 == 0) {
             count++;
-            // stop incrementing when the button is held down
-            while (!PORTFbits.RF2);
+            // when the button is held down
+            while (!PORTFbits.RF2) {
+                time++;
+                __delay_ms(1);
+                // if it's held down for 500 ms
+                while (time > 500 && !PORTFbits.RF2) {
+                    count++;
+                	LEDarray_disp_bin(count);
+                	__delay_ms(50);
+                }
+            }
         }
         
 		LEDarray_disp_bin(count); //output a on the LED array in binary
