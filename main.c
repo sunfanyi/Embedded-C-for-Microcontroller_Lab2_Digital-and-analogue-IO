@@ -17,7 +17,7 @@ void main(void)
   
     while (1) {
         unsigned int val = ADC_getval();  // get brightness in digital
-        LEDarray_disp_bin(val);
-		__delay_ms(50);
+        LEDarray_disp_dec(val);  //display value on LED array linearly
+//		__delay_ms(50);
     }
 }

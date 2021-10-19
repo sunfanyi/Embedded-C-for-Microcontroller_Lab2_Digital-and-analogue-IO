@@ -71,7 +71,6 @@ void LEDarray_disp_dec(unsigned int number)
 	disp_val = pow(2, number/10) - 1;
 	//some code to manipulate the variable number into the correct
 	//format and store in disp_val for display on the LED array
-    
 
 	LEDarray_disp_bin(disp_val); 	//display value on LED array
 }
