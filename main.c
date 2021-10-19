@@ -14,8 +14,14 @@ void main(void)
     btnInput_init();
   
     while (1) {
-        if (PORTFbits,RF2 == 0) {count++;}
+        
+        if (PORTFbits.RF2 == 0) {
+            count++;
+            // stop incrementing when the button is held down
+            while (!PORTFbits.RF2);
+        }
+        
 		LEDarray_disp_bin(count); //output a on the LED array in binary
-		__delay_ms(100); // Longer delay so that single press won't be recognised as twice
+		__delay_ms(50);
     }
 }
