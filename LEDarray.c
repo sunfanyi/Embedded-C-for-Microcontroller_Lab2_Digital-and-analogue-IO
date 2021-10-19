@@ -39,7 +39,7 @@ void btnInput_init(void)
     //set up TRIS registers for input from the button
     TRISFbits.TRISF2 = 1;
     //turn off analogue input
-    ANSELFbits.ANSELF2=0;
+    ANSELFbits.ANSELF2 = 0;
 }
 
 /************************************
@@ -58,7 +58,6 @@ void LEDarray_disp_bin(unsigned int number)
     if (number & 0b00100000) {LATAbits.LATA5 = 1;} else {LATAbits.LATA5 = 0;}
     if (number & 0b01000000) {LATFbits.LATF0 = 1;} else {LATFbits.LATF0 = 0;}
     if (number & 0b10000000) {LATBbits.LATB0 = 1;} else {LATBbits.LATB0 = 0;}
-	//see Readme.md for examples
 }
 
 /************************************

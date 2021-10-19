@@ -4,6 +4,7 @@
 
 #include <xc.h>
 #include "LEDarray.h"
+#include "ADC.h"
 
 #define _XTAL_FREQ 64000000 //note intrinsic _delay function is 62.5ns at 64,000,000Hz  
 
@@ -12,27 +13,11 @@ void main(void)
 	unsigned int count = 0;
     LEDarray_init();
     btnInput_init();
+    ADC_init();
   
     while (1) {
-        int time = 0;
-        if (PORTFbits.RF2 == 0) {
-            count++;
-            if (count == 90) {count = 0;}  // reset after all LEDs are on
-            // when the button is held down
-            while (!PORTFbits.RF2) {
-                time++;
-                __delay_ms(1);
-                // if it's held down for 500 ms
-                while (time > 500 && !PORTFbits.RF2) {
-                    count++;
-                    if (count == 90) {count = 0;}
-                	LEDarray_disp_dec(count);
-                	__delay_ms(50);
-                }
-            }
-        }
-        
-		LEDarray_disp_dec(count); //output a on the LED array in binary
+        unsigned int val = ADC_getval();  // get brightness in digital
+        LEDarray_disp_bin(val);
 		__delay_ms(50);
     }
 }
