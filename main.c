@@ -14,10 +14,20 @@ void main(void)
     LEDarray_init();
     btnInput_init();
     ADC_init();
-  
+
+    unsigned int cur_val = ADC_getval();  // get brightness in digital
+    unsigned int max;
+    unsigned int tempval;
+    int i;
+    LEDarray_disp_bin(cur_val);
+    
     while (1) {
-        unsigned int val = ADC_getval();  // get brightness in digital
-        LEDarray_disp_dec(val);  //display value on LED array linearly
-//		__delay_ms(50);
+        cur_val = 0;  // reset the next peak value
+        for (i=0;i<1000;i++) {  // get the highest value within 1 sec
+            tempval = ADC_getval();
+            if (tempval > cur_val) {cur_val = tempval;}
+            __delay_ms(1);
+        }
+        max = LEDarray_disp_PPM(cur_val, max);  // return the display value
     }
 }
