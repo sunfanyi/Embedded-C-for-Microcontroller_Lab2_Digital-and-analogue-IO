@@ -15,19 +15,20 @@ void main(void)
     btnInput_init();
     ADC_init();
 
-    unsigned int cur_val = ADC_getval();  // get brightness in digital
-    unsigned int max;
-    unsigned int tempval;
-    int i;
-    LEDarray_disp_bin(cur_val);
+    unsigned int cur_val;
+    unsigned int max = 0;
     
     while (1) {
-        cur_val = 0;  // reset the next peak value
-        for (i=0;i<1000;i++) {  // get the highest value within 1 sec
-            tempval = ADC_getval();
-            if (tempval > cur_val) {cur_val = tempval;}
-            __delay_ms(1);
-        }
-        max = LEDarray_disp_PPM(cur_val, max);  // return the display value
+        // divided by 1.4 is just a calibration to reduce the sensitivity to light 
+        //     so that the LED behavior becomes not that boring
+        cur_val = ADC_getval() / 1.4;  // get brightness in digital
+        
+        // the maximum value should not exceed 80, otherwise it exceeds the range
+        //     and it would take very long time for max to drop down
+        if (cur_val > 80) {cur_val = 80;}  // 8 LEDs (decimal), so 80
+        
+        // return the display value to be the next max value
+        max = LEDarray_disp_PPM(cur_val, max);
+        __delay_ms(1000);
     }
 }

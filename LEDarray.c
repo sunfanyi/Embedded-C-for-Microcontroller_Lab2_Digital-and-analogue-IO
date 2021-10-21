@@ -88,7 +88,16 @@ unsigned int LEDarray_disp_PPM(unsigned int cur_val, unsigned int max)
 	
 	// some code to format the variable cur_val and max, store in disp_val for display on the LED array
 	// hint: one method is to manipulate the variables separately and then combine them using the bitwise OR operator
-    if (cur_val > max) {disp_val = cur_val;} else {disp_val = --max;}
-	LEDarray_disp_bin(disp_val);	//display value on LED array
+    cur_val = pow(2, cur_val/10) - 1;  // convert binary to decimal
+    if (cur_val > max)  {
+        max = cur_val;  // reset the max value
+    } else {
+        // the following code finds the most significant bit and right shift it by 1
+        int i = 0;  // count the bit position
+        while (max >>= 1) {i++;}  // right shift until it becomes 0 to confirm i
+        max = 1 << (i - 1);  // left shift 1 by (i-1)
+    }
+        disp_val = (max | cur_val);
+    LEDarray_disp_bin(disp_val);
     return disp_val;  // return the display value
 }
